@@ -115,16 +115,55 @@ const fi = (function() {
       })      
     },
 
-    flatten: function(array, word){
-      if (word){
-        return array.flat(1)
-      }else{
-        return array.flat()
+    unpack: function(reciver, array){
+      for (let tempvalue of array){
+        reciver.push(tempvalue)
       }
+    },
+
+    flatten: function(array, word, array2 = []){  
+      if (!Array.isArray(array)){
+        return array2.push(array)
+      }     
+      if (word){
+        for (let value of array){
+          if (Array.isArray(value)){
+            this.unpack(array2, value)
+          }else{
+            array2.push(value)
+          }
+        }
+      }else{
+        for (let value of array){
+          this.flatten(value, false, array2)
+        }
+      }
+      return array2    
     },    
 
-    uniq: function(array, sorted, callback){
-
+    uniq: function(array, sorted = false, callback = false){
+       if (sorted){
+        let final = [array[0]]
+        for (let i = 0; i < array.length; i++){
+          if (array[i] !== final[i-1]){
+            final.push(array[i])
+          }
+        }
+        return final
+       }else if (!callback){
+        return Array.from(new Set(array))
+       }else{
+        var uniqV = new Set()
+        var mod = new Set()
+        for (let value of array){
+          let modVal = callback(value)
+          if (!mod.has(modVal)){
+            mod.add(modVal)
+            uniqV.add(value)
+          }
+        }
+        return Array.from(uniqV)
+       }      
     },
 
     keys: function(object){
@@ -146,3 +185,10 @@ const fi = (function() {
 })()
 
 fi.libraryMethod()
+
+
+
+
+
+
+ 
