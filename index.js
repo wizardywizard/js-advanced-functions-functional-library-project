@@ -151,7 +151,7 @@ const fi = (function() {
         }
         return final
        }else if (!callback){
-        return Array.from(new Set(array))
+          return Array.from(new Set(array))
        }else{
         var uniqV = new Set()
         var mod = new Set()
@@ -174,10 +174,16 @@ const fi = (function() {
       return Object.values(object)
     },
 
-    functions: function(object) {  
-      return object.sort(function(a, b){
-        return a - b
-      })      
+    functions: function(object) { 
+      let keys = Object.keys(object)
+      let answer =[]      
+      for (let i = 0; i < keys.length; i++){  
+        if (typeof Object.values(object)[i] === "function"){
+          answer.push(keys[i])
+        
+        }
+      }      
+      return answer.sort()      
     },
 
 

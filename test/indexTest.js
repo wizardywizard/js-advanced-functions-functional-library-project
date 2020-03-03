@@ -286,6 +286,7 @@ describe('index.js', function () {
 
 
     it('returns a sorted collection of the names of every method in an object', function () {
+      // console.log(testObject, fi.functions(testObject), final)
       expect(arraysEqual(fi.functions(testObject), final)).to.equal(true)
     })
   })
@@ -295,7 +296,7 @@ function arraysEqual(arrA, arrB) {
   if (arrA.length !== arrB.length) return false
   for (let idx = 0; idx < arrA.length; idx++) {
     if (arrA[idx] !== arrB[idx]) {
-
+      
       if (isNaN(arrA[idx]) && isNaN(arrB[idx])) continue
       return false
     }
